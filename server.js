@@ -65,4 +65,20 @@ app.post('/users/', (req, res, next) => {
     });
 });
 
+app.delete('/users/:id', (req, res, next) => {
+    let sql = 'DELETE FROM users WHERE userId = ?';
+    let params = [req.params.id];
+    db.run(sql, params, function (err, result) {
+        if (err) {
+            res.status(400).json({'error': err.message});
+            return;
+        }
+        res.json({
+            'message': 'success',
+            rows: this.changes
+        });
+    })
+})
+
+
 
