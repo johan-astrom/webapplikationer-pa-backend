@@ -30,6 +30,21 @@ app.get('/users', (req, res, next) => {
     });
 });
 
+app.get('/users/:id', (req, res, next) => {
+    let sql = 'SELECT * FROM users WHERE userId = ?';
+    let params = [req.params.id];
+    db.all(sql, params, (err, rows) => {
+        if (err) {
+            res.status(400).json({'error': err.message});
+            return;
+        }
+        res.json({
+            'message': 'success',
+            'users': rows
+        })
+    });
+});
+
 app.post('/users/', (req, res, next) => {
     let data = {
         username: req.body.username,
