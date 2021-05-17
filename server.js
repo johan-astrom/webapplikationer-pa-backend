@@ -5,7 +5,6 @@ const bodyParser = require('body-parser');
 const db = require('./db.js');
 
 app.use(cors());
-
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
@@ -26,7 +25,7 @@ app.get('/users', (req, res, next) => {
         res.json({
             'message': 'success',
             'users': rows
-        })
+        });
     });
 });
 
@@ -41,7 +40,7 @@ app.get('/users/:id', (req, res, next) => {
         res.json({
             'message': 'success',
             'users': rows
-        })
+        });
     });
 });
 
@@ -52,7 +51,7 @@ app.post('/users/', (req, res, next) => {
     };
     let sql = 'INSERT INTO users (username, password) VALUES (?,?)'
     let params = [data.username, data.password];
-    db.run(sql, params, function(err, result){
+    db.run(sql, params, (err, result) => {
         if (err){
             res.status(400).json({'error': err.message});
             return;
@@ -61,14 +60,33 @@ app.post('/users/', (req, res, next) => {
             'message': 'success',
             'users': data,
             'id': this.lastID
-        })
+        });
+    });
+});
+
+app.patch('/users/:id', (req, res, next) => {
+    let data = {
+        password: req.body.password
+    };
+    let sql = 'UPDATE users SET password = ? WHERE userId = ?';
+    let params = [data.password, req.params.id];
+    db.run(sql, params, (err, result) => {
+        if (err) {
+            res.status(400).json({'error': err.message});
+            return;
+        }
+        res.json({
+            'message': 'success',
+            'users': data,
+            'id': this.lastID
+        });
     });
 });
 
 app.delete('/users/:id', (req, res, next) => {
     let sql = 'DELETE FROM users WHERE userId = ?';
     let params = [req.params.id];
-    db.run(sql, params, function (err, result) {
+    db.run(sql, params, (err, result) => {
         if (err) {
             res.status(400).json({'error': err.message});
             return;
@@ -77,8 +95,8 @@ app.delete('/users/:id', (req, res, next) => {
             'message': 'success',
             rows: this.changes
         });
-    })
-})
+    });
+});
 
 
 
