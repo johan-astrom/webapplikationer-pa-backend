@@ -10,7 +10,7 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
         console.log('Connected to database');
         db.run(`CREATE TABLE users (
             userId INTEGER PRIMARY KEY,
-            username TEXT,
+            username TEXT UNIQUE,
             password TEXT
             )`, (err) => {
             if (err) {
