@@ -44,6 +44,21 @@ app.get('/users/:id', (req, res, next) => {
     });
 });
 
+app.get('/users/:username', (req, res, next) => {
+    let sql = 'SELECT * FROM users WHERE username = ?';
+    let params = [req.params.username];
+    db.all(sql, params, (err, rows) => {
+        if (err) {
+            res.status(400).json({'error': err.message});
+            return;
+        }
+        res.json({
+            'message': 'success',
+            'users': rows
+        });
+    });
+});
+
 app.post('/users/', (req, res, next) => {
     let data = {
         username: req.body.username,
