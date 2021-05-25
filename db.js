@@ -23,17 +23,17 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
         });
         db.run(`CREATE TABLE testResults (
             testId INTEGER PRIMARY KEY,
-            userId INTEGER ,
-             operation TEXT,
-             timeStamp  TEXT,
-             score  INTEGER
+            userId INTEGER,
+            operation TEXT,
+            timeStamp  TEXT,
+            score  INTEGER
             )`, (err) => {
             if (err) {
                 console.log(err)
             } else {
                 // Table just created, creating some rows
                 let insert = 'INSERT INTO testResults (userId,operation,timeStamp,score)  VALUES (?,?,?,?)'
-                db.run(insert, [1, 'addition',new Date(),4])
+                db.run(insert, [1, 'addition', new Date(), 4])
             }
         });
     }
