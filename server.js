@@ -113,6 +113,46 @@ app.delete('/users/:id', (req, res, next) => {
     });
 });
 
+app.get('/testResults/:userId', (req,res,next) =>{
+    let sql='select * from testResults where userId=?'
+    let params= [req.params.userId];
+    db.all(sql,params,(err,rows) =>{
+        if (err) {
+            res.status(400).json({'error': err.message});
+            return;
+        }
+        res.json({
+            'message': 'success',
+            'testResults':rows
+        })
+    } )
+});
+
+app.post('/testResults/', (req, res, next) => {
+    let data = {
+        userId: req.body.userId,
+        operation: req.body.operation,
+        timeStamp : req.body.timeStamp,
+        score:  req.body.score
+    };
+    console.log(JSON.stringify(data));
+    let sql = 'INSERT INTO testResults (userId,operation,timeStamp,score) VALUES (?,?,?,?)'
+    let params = [data.userId, data.operation,data.timeStamp,data.score];
+    db.run(sql, params, (err, result) => {
+        if (err){
+            res.status(400).json({'error': err.message});
+            return;
+        }
+        res.json({
+            'message': 'success',
+            'testResults': data,
+            'id': this.lastID
+        });
+    });
+});
+
+
+
 app.get('/', (req, res, next) => {
     res.json({'message': 'success'});
 })
