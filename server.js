@@ -128,7 +128,7 @@ app.get('/testResults/', (req,res,next) =>{
 });
 
 app.get('/testResults/:userId', (req,res,next) =>{
-    let sql='select * from testResults where userId=?'
+    let sql='SELECT * FROM testResults WHERE userId=?';
     let params= [req.params.userId];
     db.all(sql,params,(err,rows) =>{
         if (err) {
@@ -138,8 +138,8 @@ app.get('/testResults/:userId', (req,res,next) =>{
         res.json({
             'message': 'success',
             'testResults':rows
-        })
-    } )
+        });
+    });
 });
 
 app.post('/testResults/', (req, res, next) => {
@@ -149,8 +149,7 @@ app.post('/testResults/', (req, res, next) => {
         timeStamp : req.body.timeStamp,
         score:  req.body.score
     };
-    console.log(JSON.stringify(data));
-    let sql = 'INSERT INTO testResults (userId,operation,timeStamp,score) VALUES (?,?,?,?)'
+    let sql = 'INSERT INTO testResults (userId,operation,timeStamp,score) VALUES (?,?,?,?)';
     let params = [data.userId, data.operation,data.timeStamp,data.score];
     db.run(sql, params, (err, result) => {
         if (err){

@@ -23,10 +23,10 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
         });
         db.run(`CREATE TABLE testResults (
             testId INTEGER PRIMARY KEY,
-            userId INTEGER ,
-             operation TEXT,
-             timeStamp  TEXT,
-             score  INTEGER
+            userId INTEGER,
+            operation TEXT,
+            timeStamp  TEXT,
+            score  INTEGER
             )`, (err) => {
             if (err) {
                 console.log(err)
