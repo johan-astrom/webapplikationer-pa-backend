@@ -112,6 +112,20 @@ app.delete('/users/:id', (req, res, next) => {
         });
     });
 });
+app.get('/testResults/', (req,res,next) =>{
+    let sql='select * from testResults '
+    let params= [req.params.userId];
+    db.all(sql,params,(err,rows) =>{
+        if (err) {
+            res.status(400).json({'error': err.message});
+            return;
+        }
+        res.json({
+            'message': 'success',
+            'testResults':rows
+        })
+    } )
+});
 
 app.get('/testResults/:userId', (req,res,next) =>{
     let sql='select * from testResults where userId=?'
