@@ -25,6 +25,7 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
             testId INTEGER PRIMARY KEY,
             userId INTEGER,
             operation TEXT,
+            difficulty TEXT,
             timeStamp  TEXT,
             score  INTEGER
             )`, (err) => {
