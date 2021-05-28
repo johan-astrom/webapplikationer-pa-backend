@@ -155,6 +155,7 @@ app.post('/testResults/', (req, res, next) => {
     db.run(sql, params, (err, result) => {
         if (err){
             res.status(400).json({'error': err.message});
+            console.log(err.message)
             return;
         }
         res.json({

@@ -33,8 +33,8 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
                 console.log(err)
             } else {
                 // Table just created, creating some rows
-                let insert = 'INSERT INTO testResults (userId,operation,timeStamp,score)  VALUES (?,?,?,?)'
-                db.run(insert, [1, 'addition', new Date(), 4])
+                let insert = 'INSERT INTO testResults (userId,operation,difficulty,timeStamp,score)  VALUES (?,?,?,?,?)'
+                db.run(insert, [1, 'addition', 'easy', new Date().toLocaleString(), 4])
             }
         });
     }
