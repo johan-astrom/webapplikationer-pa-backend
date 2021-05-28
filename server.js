@@ -146,6 +146,7 @@ app.post('/testResults/', (req, res, next) => {
     let data = {
         userId: req.body.userId,
         operation: req.body.operation,
+        difficulty: req.body.difficulty,
         timeStamp : req.body.timeStamp,
         score:  req.body.score
     };
