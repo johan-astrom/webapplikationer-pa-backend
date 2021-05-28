@@ -150,8 +150,8 @@ app.post('/testResults/', (req, res, next) => {
         timeStamp : req.body.timeStamp,
         score:  req.body.score
     };
-    let sql = 'INSERT INTO testResults (userId,operation,timeStamp,score) VALUES (?,?,?,?)';
-    let params = [data.userId, data.operation,data.timeStamp,data.score];
+    let sql = 'INSERT INTO testResults (userId,operation,difficulty,timeStamp,score) VALUES (?,?,?,?,?)';
+    let params = [data.userId, data.operation, data.difficulty, data.timeStamp, data.score];
     db.run(sql, params, (err, result) => {
         if (err){
             res.status(400).json({'error': err.message});
