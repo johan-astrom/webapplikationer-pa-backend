@@ -8,20 +8,16 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
         throw err;
     } else {
         console.log('Connected to database');
-        db.run(`CREATE TABLE users (
+        db.run(`CREATE TABLE IF NOT EXISTS users (
             userId INTEGER PRIMARY KEY,
             username TEXT UNIQUE,
             password TEXT
             )`, (err) => {
             if (err) {
-                // Table already created
-            } else {
-                // Table just created, creating some rows
-                let insert = 'INSERT INTO users (username, password) VALUES (?,?)'
-                db.run(insert, ['johanastrom', 'mypassword'])
+                console.log(err.message);
             }
         });
-        db.run(`CREATE TABLE testResults (
+        db.run(`CREATE TABLE IF NOT EXISTS testResults (
             testId INTEGER PRIMARY KEY,
             userId INTEGER,
             operation TEXT,
@@ -30,11 +26,7 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
             score  INTEGER
             )`, (err) => {
             if (err) {
-                console.log(err)
-            } else {
-                // Table just created, creating some rows
-                let insert = 'INSERT INTO testResults (userId,operation,difficulty,timeStamp,score)  VALUES (?,?,?,?,?)'
-                db.run(insert, [1, 'addition', 'easy', new Date().toLocaleString(), 4])
+                console.log(err.message)
             }
         });
     }
